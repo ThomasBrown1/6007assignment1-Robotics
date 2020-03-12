@@ -60,10 +60,7 @@ function pushButtonPressed (src,event)
     Theta4=str2num(box4);
     Theta5=str2num(box5);
     Theta6=str2num(box6);
-    
-    %%A = R1+R2+R3+R4+R5+R6;
-    %%A = num2str(A)
-    %%disp(A)
+  
     
     D1 = 330;
     D2 = 0;
@@ -80,9 +77,9 @@ function pushButtonPressed (src,event)
     A6 = 0;
     
     NotAlpha1 = -90;
-    NotAlpha2 = -180;
+    NotAlpha2 = 180;
     NotAlpha3 = -90;
-    NotAlpha4 = -90;
+    NotAlpha4 = 90;
     NotAlpha5 = -90;
     NotAlpha6 = 180;
     
@@ -92,6 +89,35 @@ function pushButtonPressed (src,event)
     jointSxtranslation = [1 0 0 0;0 cosd(NotAlpha1) -sind(NotAlpha1) 0;0 sind(NotAlpha1) cosd(NotAlpha1) 0;0 0 0 1];
     jointSresultant = jointSzrotation*jointSztranslation*jointSxrotation*jointSxtranslation;
     
+    jointLzrotation = [cosd(Theta2) -sind(Theta2) 0 0;sind(Theta2) cosd(Theta2) 0 0;0 0 1 0;0 0 0 1];
+    jointLztranslation = [1 0 0 0;0 1 0 0;0 0 1 D2;0 0 0 1];
+    jointLxrotation = [ 1 0 0 A2; 0 1 0 0;0 0 1 0;0 0 0 1];
+    jointLxtranslation = [1 0 0 0;0 cosd(NotAlpha2) -sind(NotAlpha2) 0;0 sind(NotAlpha2) cosd(NotAlpha2) 0;0 0 0 1];
+    jointLresultant = jointLzrotation*jointLztranslation*jointLxrotation*jointLxtranslation;
     
+    jointUzrotation = [cosd(Theta3) -sind(Theta3) 0 0;sind(Theta3) cosd(Theta3) 0 0;0 0 1 0;0 0 0 1];
+    jointUztranslation = [1 0 0 0;0 1 0 0;0 0 1 D3;0 0 0 1];
+    jointUxrotation = [ 1 0 0 A3; 0 1 0 0;0 0 1 0;0 0 0 1];
+    jointUxtranslation = [1 0 0 0;0 cosd(NotAlpha3) -sind(NotAlpha3) 0;0 sind(NotAlpha3) cosd(NotAlpha3) 0;0 0 0 1];
+    jointUresultant = jointUzrotation*jointUztranslation*jointUxrotation*jointUxtranslation;
     
+    jointRzrotation = [cosd(Theta4) -sind(Theta4) 0 0;sind(Theta4) cosd(Theta4) 0 0;0 0 1 0;0 0 0 1];
+    jointRztranslation = [1 0 0 0;0 1 0 0;0 0 1 D1;0 0 0 1];
+    jointRxrotation = [ 1 0 0 A4; 0 1 0 0;0 0 1 0;0 0 0 1];
+    jointRxtranslation = [1 0 0 0;0 cosd(NotAlpha4) -sind(NotAlpha4) 0;0 sind(NotAlpha4) cosd(NotAlpha4) 0;0 0 0 1];
+    jointRresultant = jointRzrotation*jointRztranslation*jointRxrotation*jointRxtranslation;
+    
+    jointBzrotation = [cosd(Theta5) -sind(Theta5) 0 0;sind(Theta5) cosd(Theta5) 0 0;0 0 1 0;0 0 0 1];
+    jointBztranslation = [1 0 0 0;0 1 0 0;0 0 1 D5;0 0 0 1];
+    jointBxrotation = [ 1 0 0 A5; 0 1 0 0;0 0 1 0;0 0 0 1];
+    jointBxtranslation = [1 0 0 0;0 cosd(NotAlpha5) -sind(NotAlpha5) 0;0 sind(NotAlpha5) cosd(NotAlpha5) 0;0 0 0 1];
+    jointBresultant = jointBzrotation*jointBztranslation*jointBxrotation*jointBxtranslation;
+    
+    jointTzrotation = [cosd(Theta6) -sind(Theta6) 0 0;sind(Theta6) cosd(Theta6) 0 0;0 0 1 0;0 0 0 1];
+    jointTztranslation = [1 0 0 0;0 1 0 0;0 0 1 D6;0 0 0 1];
+    jointTxrotation = [ 1 0 0 A6; 0 1 0 0;0 0 1 0;0 0 0 1];
+    jointTxtranslation = [1 0 0 0;0 cosd(NotAlpha6) -sind(NotAlpha6) 0;0 sind(NotAlpha6) cosd(NotAlpha6) 0;0 0 0 1];
+    jointTresultant = jointTzrotation*jointTztranslation*jointTxrotation*jointTxtranslation;
+    
+    finalResultant = jointSresultant*jointBresultant*jointUresultant*jointRresultant*jointLresultant*jointTresultant
 end
