@@ -1,150 +1,154 @@
-%% ignore varaible names
-%%Code for gui
-clc
-clear
-close all
+%%Code to construct a Graphical User Inteface(GUI) to allow the user to input the joint angles
+%%for a six joint Yakasawa GP8 robot. The code uses those angles and calculates the
+%%end effector position through the conventional denavit hartenberg method.
+%%The final values for X,Y,Z, Roll, Pitch,and Yaw are displyed to the user
+%%in the GUI.
+
+clc %% clears the commant window each time the programme is run to aviod old information displaying on the command line
+clear %% clears the variables and functions used throughout the code from memory on each new run
+close all %% Closes all figures displayed from previously ran code
 
 
 
-global box1 
-global box2
-global box3
-global box4
-global box5
-global box6
-global box7
+global box1 %% Decleares box1 as global so that it can be utalised in a function further on in the code
+global box2 %% Decleares box2 as global so that it can be utalised in a function further on in the code
+global box3 %% Decleares box3 as global so that it can be utalised in a function further on in the code
+global box4 %% Decleares box4 as global so that it can be utalised in a function further on in the code
+global box5 %% Decleares box5 as global so that it can be utalised in a function further on in the code
+global box6 %% Decleares box6 as global so that it can be utalised in a function further on in the code
+global box7 %% Decleares box7 as global so that it can be utalised in a function further on in the code
 
 
-f = figure;
-box1 = uicontrol('style','edit', 'position',[100 300 100 10]);
-box2 = uicontrol('style','edit', 'position',[100 280 100 10]);
-box3 = uicontrol('style','edit', 'position',[100 260 100 10]);
-box4 = uicontrol('style','edit', 'position',[100 240 100 10]);
-box5 = uicontrol('style','edit', 'position',[100 220 100 10]);
-box6 = uicontrol('style','edit', 'position',[100 200 100 10]);
+f = figure; %% creates a new figure using default property values
+box1 = uicontrol('style','edit', 'position',[100 300 100 10]); %% Sets up box1 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI 
+box2 = uicontrol('style','edit', 'position',[100 280 100 10]); %% Sets up box2 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box3 = uicontrol('style','edit', 'position',[100 260 100 10]); %% Sets up box3 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box4 = uicontrol('style','edit', 'position',[100 240 100 10]); %% Sets up box4 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box5 = uicontrol('style','edit', 'position',[100 220 100 10]); %% Sets up box5 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box6 = uicontrol('style','edit', 'position',[100 200 100 10]); %% Sets up box6 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
 
-Box7 = uicontrol('style','pushbutton','string','Calculate x,y,z coordinates','position', [25 160 180 20]);
-Box7.Callback = @pushButtonPressed;
+Box7 = uicontrol('style','pushbutton','string','Calculate x,y,z coordinates','position', [25 160 180 20]); %% Sets up box7 as a pushbutton in the GUI
+Box7.Callback = @pushButtonPressed; %% Causes an event to occur when the user interacts with the pushbutton, the function is known as pushButtonPressed
 
-Box8 = uicontrol('style','text','string','Enter angle 1','position', [10 300 100 10]);
-Box9 = uicontrol('style','text','string','Enter angle 2','position', [10 280 100 10]);
-Box10 = uicontrol('style','text','string','Enter angle 3','position',[10 260 100 10]);
-Box11 = uicontrol('style','text','string','Enter angle 4','position',[10 240 100 10]);
-Box12 = uicontrol('style','text','string','Enter angle 5','position',[10 220 100 10]);
-Box13 = uicontrol('style','text','string','Enter angle 6','position',[10 200 100 10]);
-Box14 = uicontrol('style','text','string','Denavit Hartenburg Calculator','position',[10 340 100 10]);
-Box15 = uicontrol('style','text','string','Enter in your values to calculate the end position of your robot','position',[10 320 100 10]);
-Box16 = uicontrol('style','text','string','X coordinate =','position',[5 50 100 30],'BackgroundColor','Red');
-Box17 = uicontrol('style','text','string','Y Coordinate =','position',[105 50 100 30],'BackgroundColor','green');
-Box18 = uicontrol('style','text','string','Z coordinate =','position',[205 50 100 30],'BackgroundColor','blue');
-Box19 = uicontrol('style','text','string','Roll =','position',[305 50 100 30],'BackgroundColor','Red');
-Box20 = uicontrol('style','text','string','Pitch =','position',[405 50 100 30],'BackgroundColor','green');
-Box21 = uicontrol('style','text','string','Yaw =','position',[505 50 100 30],'BackgroundColor','blue');
-function pushButtonPressed (src,event)
+Box8 = uicontrol('style','text','string','Enter angle 1','position', [10 300 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box9 = uicontrol('style','text','string','Enter angle 2','position', [10 280 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box10 = uicontrol('style','text','string','Enter angle 3','position',[10 260 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box11 = uicontrol('style','text','string','Enter angle 4','position',[10 240 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box12 = uicontrol('style','text','string','Enter angle 5','position',[10 220 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box13 = uicontrol('style','text','string','Enter angle 6','position',[10 200 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box14 = uicontrol('style','text','string','Denavit Hartenburg Calculator','position',[10 340 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box15 = uicontrol('style','text','string','Enter in your values to calculate the end position of your robot','position',[10 320 100 10]); %% Displays a box with text inside to aid with operation of the GUI
+Box16 = uicontrol('style','text','string','X coordinate =','position',[5 50 100 30],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box17 = uicontrol('style','text','string','Y Coordinate =','position',[105 50 100 30],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box18 = uicontrol('style','text','string','Z coordinate =','position',[205 50 100 30],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box19 = uicontrol('style','text','string','Roll =','position',[305 50 100 30],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box20 = uicontrol('style','text','string','Pitch =','position',[405 50 100 30],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box21 = uicontrol('style','text','string','Yaw =','position',[505 50 100 30],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+function pushButtonPressed (src,event) %% Causes the below event to trigger upon pressing the GUI pushbutton
     
-    global box1
-    global box2
-    global box3
-    global box4
-    global box5
-    global box6
+    global box1 %%Declares the use of box1 inside this function. In particular to take the values inputted by the user.
+    global box2 %%Declares the use of box2 inside this function. In particular to take the values inputted by the user.
+    global box3 %%Declares the use of box3 inside this function. In particular to take the values inputted by the user.
+    global box4 %%Declares the use of box4 inside this function. In particular to take the values inputted by the user.
+    global box5 %%Declares the use of box5 inside this function. In particular to take the values inputted by the user.
+    global box6 %%Declares the use of box6 inside this function. In particular to take the values inputted by the user.
    
-    box1=get(box1,'string');
-    box2=get(box2,'string');
-    box3=get(box3,'string');
-    box4=get(box4,'string');
-    box5=get(box5,'string');
-    box6=get(box6,'string');
+    box1=get(box1,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    box2=get(box2,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    box3=get(box3,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    box4=get(box4,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    box5=get(box5,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    box6=get(box6,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
     
-    Theta1=str2num(box1); 
-    Theta2=str2num(box2);
-    Theta3=str2num(box3);
-    Theta4=str2num(box4);
-    Theta5=str2num(box5);
-    Theta6=str2num(box6);
+    Theta1=str2num(box1); %% Converts the value inputted into box1 on the GUI from a string to a number for mathmatical manipulation
+    Theta2=str2num(box2); %% Converts the value inputted into box2 on the GUI from a string to a number for mathmatical manipulation
+    Theta3=str2num(box3); %% Converts the value inputted into box3 on the GUI from a string to a number for mathmatical manipulation
+    Theta4=str2num(box4); %% Converts the value inputted into box4 on the GUI from a string to a number for mathmatical manipulation
+    Theta5=str2num(box5); %% Converts the value inputted into box5 on the GUI from a string to a number for mathmatical manipulation
+    Theta6=str2num(box6); %% Converts the value inputted into box6 on the GUI from a string to a number for mathmatical manipulation
   
+    %% Below the values calculated in the DH table have been declared as variables in preperation for mathmatical manipulation to calculate the end effector position
+    D1 = 330; %% Here the value for moveremnt in the Z axis for joint 1 has been assigned to the varaible D1
+    D2 = 0;   %% Here the value for moveremnt in the Z axis for joint 2 has been assigned to the varaible D2
+    D3 = 0;   %% Here the value for moveremnt in the Z axis for joint 3 has been assigned to the varaible D3
+    D4 = -340;%% Here the value for moveremnt in the Z axis for joint 4 has been assigned to the varaible D4
+    D5 = 0;   %% Here the value for moveremnt in the Z axis for joint 5 has been assigned to the varaible D5
+    D6 = -180;%% Here the value for moveremnt in the Z axis for joint 6 has been assigned to the varaible D6
     
-    D1 = 330;
-    D2 = 0;
-    D3 = 0;
-    D4 = -340;
-    D5 = 0;
-    D6 = -180;
+    A1 = 40;  %% Here the value for moveremnt in the X axis for joint 1 has been assigned to the varaible A1
+    A2 = 345; %% Here the value for moveremnt in the X axis for joint 2 has been assigned to the varaible A2
+    A3 = 40;  %% Here the value for moveremnt in the X axis for joint 3 has been assigned to the varaible A3
+    A4 = 0;   %% Here the value for moveremnt in the X axis for joint 4 has been assigned to the varaible A4
+    A5 = 0;   %% Here the value for moveremnt in the X axis for joint 5 has been assigned to the varaible A5
+    A6 = 0;   %% Here the value for moveremnt in the X axis for joint 6 has been assigned to the varaible A6
     
-    A1 = 40;
-    A2 = 345;
-    A3 = 40;
-    A4 = 0;
-    A5 = 0;
-    A6 = 0;
+    NotAlpha1 = -90; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
+    NotAlpha2 = 180; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
+    NotAlpha3 = -90; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
+    NotAlpha4 = 90;  %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
+    NotAlpha5 = -90; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
+    NotAlpha6 = 180; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
     
-    NotAlpha1 = -90;
-    NotAlpha2 = 180;
-    NotAlpha3 = -90;
-    NotAlpha4 = 90;
-    NotAlpha5 = -90;
-    NotAlpha6 = 180;
+    Base = [1 0 0 0; 0 1 0 0; 0 0 1 -330; 0 0 0 1]; %% Defines the position of the baseframe of the Yakasaw GP8 robot
     
-    Base = [1 0 0 0; 0 1 0 0; 0 0 1 -330; 0 0 0 1];
+    jointSzrotation = [cosd(Theta1) -sind(Theta1) 0 0; sind(Theta1) cosd(Theta1) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a varaible.
+    jointSztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D1; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointSxrotation = [ 1 0 0 A1; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointSxtranslation = [1 0 0 0; 0 cosd(NotAlpha1) -sind(NotAlpha1) 0; 0 sind(NotAlpha1) cosd(NotAlpha1) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigne dto a variable.
+    jointSresultant = jointSzrotation*jointSztranslation*jointSxtranslation*jointSxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointSresultant.
     
-    jointSzrotation = [cosd(Theta1) -sind(Theta1) 0 0; sind(Theta1) cosd(Theta1) 0 0; 0 0 1 0; 0 0 0 1];
-    jointSztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D1; 0 0 0 1];
-    jointSxrotation = [ 1 0 0 A1; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-    jointSxtranslation = [1 0 0 0; 0 cosd(NotAlpha1) -sind(NotAlpha1) 0; 0 sind(NotAlpha1) cosd(NotAlpha1) 0; 0 0 0 1];
-    jointSresultant = jointSzrotation*jointSztranslation*jointSxtranslation*jointSxrotation;
+    jointLzrotation = [cosd(Theta2-90) -sind(Theta2-90) 0 0; sind(Theta2-90) cosd(Theta2-90) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointLztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D2; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointLxrotation = [ 1 0 0 A2; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointLxtranslation = [1 0 0 0; 0 cosd(NotAlpha2) -sind(NotAlpha2) 0; 0 sind(NotAlpha2) cosd(NotAlpha2) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointLresultant = jointLzrotation*jointLztranslation*jointLxtranslation*jointLxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointLresultant.
     
-    jointLzrotation = [cosd(Theta2-90) -sind(Theta2-90) 0 0; sind(Theta2-90) cosd(Theta2-90) 0 0; 0 0 1 0; 0 0 0 1];
-    jointLztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D2; 0 0 0 1];
-    jointLxrotation = [ 1 0 0 A2; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-    jointLxtranslation = [1 0 0 0; 0 cosd(NotAlpha2) -sind(NotAlpha2) 0; 0 sind(NotAlpha2) cosd(NotAlpha2) 0; 0 0 0 1];
-    jointLresultant = jointLzrotation*jointLztranslation*jointLxtranslation*jointLxrotation;
+    jointUzrotation = [cosd(Theta3) -sind(Theta3) 0 0; sind(Theta3) cosd(Theta3) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointUztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D3; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointUxrotation = [ 1 0 0 A3; 0 1 0 0; 0 0 1 0;  0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointUxtranslation = [1 0 0 0; 0 cosd(NotAlpha3) -sind(NotAlpha3) 0; 0 sind(NotAlpha3) cosd(NotAlpha3) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointUresultant = jointUzrotation*jointUztranslation*jointUxrotation*jointUxtranslation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointUresultant.
     
-    jointUzrotation = [cosd(Theta3) -sind(Theta3) 0 0; sind(Theta3) cosd(Theta3) 0 0; 0 0 1 0; 0 0 0 1];
-    jointUztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D3; 0 0 0 1];
-    jointUxrotation = [ 1 0 0 A3; 0 1 0 0; 0 0 1 0;  0 0 0 1];
-    jointUxtranslation = [1 0 0 0; 0 cosd(NotAlpha3) -sind(NotAlpha3) 0; 0 sind(NotAlpha3) cosd(NotAlpha3) 0; 0 0 0 1];
-    jointUresultant = jointUzrotation*jointUztranslation*jointUxrotation*jointUxtranslation;
+    jointRzrotation = [cosd(Theta4) -sind(Theta4) 0 0; sind(Theta4) cosd(Theta4) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointRztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D4; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointRxrotation = [ 1 0 0 A4; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointRxtranslation = [1 0 0 0; 0 cosd(NotAlpha4) -sind(NotAlpha4) 0; 0 sind(NotAlpha4) cosd(NotAlpha4) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointRresultant = jointRzrotation*jointRztranslation*jointRxtranslation*jointRxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointRresultant.
     
-    jointRzrotation = [cosd(Theta4) -sind(Theta4) 0 0; sind(Theta4) cosd(Theta4) 0 0; 0 0 1 0; 0 0 0 1];
-    jointRztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D4; 0 0 0 1];
-    jointRxrotation = [ 1 0 0 A4; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-    jointRxtranslation = [1 0 0 0; 0 cosd(NotAlpha4) -sind(NotAlpha4) 0; 0 sind(NotAlpha4) cosd(NotAlpha4) 0; 0 0 0 1];
-    jointRresultant = jointRzrotation*jointRztranslation*jointRxtranslation*jointRxrotation;
+    jointBzrotation = [cosd(Theta5) -sind(Theta5) 0 0; sind(Theta5) cosd(Theta5) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointBztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D5; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointBxrotation = [ 1 0 0 A5; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointBxtranslation = [1 0 0 0; 0 cosd(NotAlpha5) -sind(NotAlpha5) 0; 0 sind(NotAlpha5) cosd(NotAlpha5) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointBresultant = jointBzrotation*jointBztranslation*jointBxtranslation*jointBxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointBresultant.
     
-    jointBzrotation = [cosd(Theta5) -sind(Theta5) 0 0; sind(Theta5) cosd(Theta5) 0 0; 0 0 1 0; 0 0 0 1];
-    jointBztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D5; 0 0 0 1];
-    jointBxrotation = [ 1 0 0 A5; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-    jointBxtranslation = [1 0 0 0; 0 cosd(NotAlpha5) -sind(NotAlpha5) 0; 0 sind(NotAlpha5) cosd(NotAlpha5) 0; 0 0 0 1];
-    jointBresultant = jointBzrotation*jointBztranslation*jointBxtranslation*jointBxrotation;
+    jointTzrotation = [cosd(Theta6) -sind(Theta6) 0 0; sind(Theta6) cosd(Theta6) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointTztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D6; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointTxrotation = [ 1 0 0 A6; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointTxtranslation = [1 0 0 0; 0 cosd(NotAlpha6) -sind(NotAlpha6) 0; 0 sind(NotAlpha6) cosd(NotAlpha6) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointTresultant = jointTzrotation*jointTztranslation*jointTxtranslation*jointTxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointTresultant.
     
-    jointTzrotation = [cosd(Theta6) -sind(Theta6) 0 0; sind(Theta6) cosd(Theta6) 0 0; 0 0 1 0; 0 0 0 1];
-    jointTztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D6; 0 0 0 1];
-    jointTxrotation = [ 1 0 0 A6; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-    jointTxtranslation = [1 0 0 0; 0 cosd(NotAlpha6) -sind(NotAlpha6) 0; 0 sind(NotAlpha6) cosd(NotAlpha6) 0; 0 0 0 1];
-    jointTresultant = jointTzrotation*jointTztranslation*jointTxtranslation*jointTxrotation;
+    finalResultant = Base*jointSresultant*jointLresultant*jointUresultant*jointRresultant*jointBresultant*jointTresultant %% Multiplies the values calculated from each joint resultant and the base frame to give the final resultant. This is assigned to the variable finalResultant
     
-    finalResultant = Base*jointSresultant*jointLresultant*jointUresultant*jointRresultant*jointBresultant*jointTresultant
+    X = finalResultant(1,4); %% Assigns the X value of the end effector to variable X. The X value is pulled from row one column four of the final resultant matrix
+    Y = finalResultant(2,4); %% Assigns the Y value of the end effector to variable Y. The Y value is pulled from row two column four of the final resultant matrix
+    Z = finalResultant(3,4); %% Assigns the Z value of the end effector to variable Y. The Z value is pulled from row three column four of the final resultant matrix
     
-    X = finalResultant(1,4);
-    Y = finalResultant(2,4);
-    Z = finalResultant(3,4);
+    %% Used to pull the values from the final resultant matrix needed to calculate Yaw, Pitch, and Roll as per the formula
+    R21 = finalResultant(2,1) %% The value in the first row and first column of the resultant matrix has been assigned to R21
+    R11 = finalResultant(1,1) %% The value in the second row and first column of the resultant matrix has been assigned to R11
+    R31 = finalResultant(3,1) %% The value in the third row and first column of the resultant matrix has been assigned to R31
+    R32 = finalResultant(3,2) %% The value in the third row and second column of the resultant matrix has been assigned to R32
+    R33 = finalResultant(3,3) %% The value in the third row and third column of the resultant matrix has been assigned to R33
     
-  
-    R21 = finalResultant(2,1)
-    R11 = finalResultant(1,1)
-    R31 = finalResultant(3,1)
-    R32 = finalResultant(3,2)
-    R33 = finalResultant(3,3)
+    Yaw = atand(R21/R11); %%Formula to calculate the Yaw Value using the variables from the resultant matrix, assigned to the variable Yaw
+    Pitch = atand(-R31/(sqrt(R32*R32)+(R33*R33))); %%Formula to calculate the Pitch value using the variabes from te resultant matrix, assigned to the variable Pitch
+    Roll = atand(R32/R33); % Formula to calculate the Roll value using the variables from the resultant matrix, assigned to the variable Roll
     
-    Yaw = atand(R21/R11);
-    Pitch = atand(-R31/(sqrt(R32*R32)+(R33*R33)));
-    Roll = atand(R32/R33);
-    
-    Box22 = uicontrol('style','text','string',X,'position',[5 20 100 30],'BackgroundColor','Red');
-    Box23 = uicontrol('style','text','string',Y,'position',[105 20 100 30],'BackgroundColor','green');
-    Box24 = uicontrol('style','text','string',Z,'position',[205 20 100 30],'BackgroundColor','blue');
-    Box22 = uicontrol('style','text','string',Roll,'position',[305 20 100 30],'BackgroundColor','Red');
-    Box23 = uicontrol('style','text','string',Pitch,'position',[405 20 100 30],'BackgroundColor','green');
-    Box24 = uicontrol('style','text','string',Yaw,'position',[505 20 100 30],'BackgroundColor','blue');
+    Box22 = uicontrol('style','text','string',X,'position',[5 20 100 30],'BackgroundColor','Red'); %% Displays the calculated X value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box23 = uicontrol('style','text','string',Y,'position',[105 20 100 30],'BackgroundColor','green'); %% Displays the calculated Y value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box24 = uicontrol('style','text','string',Z,'position',[205 20 100 30],'BackgroundColor','blue'); %% Displays the calculated Z value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box22 = uicontrol('style','text','string',Roll,'position',[305 20 100 30],'BackgroundColor','Red'); %% Displays the calculated Yaw value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box23 = uicontrol('style','text','string',Pitch,'position',[405 20 100 30],'BackgroundColor','green'); %% Displays the calculated Pitch value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box24 = uicontrol('style','text','string',Yaw,'position',[505 20 100 30],'BackgroundColor','blue'); %% Displays the calculated Roll value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
     
 end
