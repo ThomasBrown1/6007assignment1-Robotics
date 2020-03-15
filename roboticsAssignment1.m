@@ -20,30 +20,30 @@ global box7 %% Decleares box7 as global so that it can be utalised in a function
 
 
 f = figure; %% creates a new figure using default property values
-box1 = uicontrol('style','edit', 'position',[100 300 100 10]); %% Sets up box1 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI 
-box2 = uicontrol('style','edit', 'position',[100 280 100 10]); %% Sets up box2 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
-box3 = uicontrol('style','edit', 'position',[100 260 100 10]); %% Sets up box3 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
-box4 = uicontrol('style','edit', 'position',[100 240 100 10]); %% Sets up box4 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
-box5 = uicontrol('style','edit', 'position',[100 220 100 10]); %% Sets up box5 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
-box6 = uicontrol('style','edit', 'position',[100 200 100 10]); %% Sets up box6 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box1 = uicontrol('style','edit', 'position',[170 300 50 20]); %% Sets up box1 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI 
+box2 = uicontrol('style','edit', 'position',[170 275 50 20]); %% Sets up box2 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box3 = uicontrol('style','edit', 'position',[170 250 50 20]); %% Sets up box3 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box4 = uicontrol('style','edit', 'position',[170 225 50 20]); %% Sets up box4 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box5 = uicontrol('style','edit', 'position',[170 200 50 20]); %% Sets up box5 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
+box6 = uicontrol('style','edit', 'position',[170 175 50 20]); %% Sets up box6 as an edit box to allow the user to input a joint angle, the one by four array specifies the postion of the box on the GUI
 
-Box7 = uicontrol('style','pushbutton','string','Calculate x,y,z coordinates','position', [25 160 180 20]); %% Sets up box7 as a pushbutton in the GUI
+Box7 = uicontrol('style','pushbutton','string','Press to calculate the end effector position','position', [1 150 250 20]); %% Sets up box7 as a pushbutton in the GUI
 Box7.Callback = @pushButtonPressed; %% Causes an event to occur when the user interacts with the pushbutton, the function is known as pushButtonPressed
 
-Box8 = uicontrol('style','text','string','Enter angle 1','position', [10 300 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box9 = uicontrol('style','text','string','Enter angle 2','position', [10 280 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box10 = uicontrol('style','text','string','Enter angle 3','position',[10 260 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box11 = uicontrol('style','text','string','Enter angle 4','position',[10 240 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box12 = uicontrol('style','text','string','Enter angle 5','position',[10 220 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box13 = uicontrol('style','text','string','Enter angle 6','position',[10 200 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box14 = uicontrol('style','text','string','Denavit Hartenburg Calculator','position',[10 340 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box15 = uicontrol('style','text','string','Enter in your values to calculate the end position of your robot','position',[10 320 100 10]); %% Displays a box with text inside to aid with operation of the GUI
-Box16 = uicontrol('style','text','string','X coordinate =','position',[5 50 100 30],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
-Box17 = uicontrol('style','text','string','Y Coordinate =','position',[105 50 100 30],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
-Box18 = uicontrol('style','text','string','Z coordinate =','position',[205 50 100 30],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
-Box19 = uicontrol('style','text','string','Roll =','position',[305 50 100 30],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
-Box20 = uicontrol('style','text','string','Pitch =','position',[405 50 100 30],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
-Box21 = uicontrol('style','text','string','Yaw =','position',[505 50 100 30],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box8 = uicontrol('style','text','string','Enter joint angle S','position', [1 300 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box9 = uicontrol('style','text','string','Enter joint angle L','position', [1 275 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box10 = uicontrol('style','text','string','Enter joint angle U','position',[1 250 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box11 = uicontrol('style','text','string','Enter joint angle R','position',[1 225 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box12 = uicontrol('style','text','string','Enter joint angle B','position',[1 200 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box13 = uicontrol('style','text','string','Enter joint angle T','position',[1 175 150 20]); %% Displays a box with text inside to aid with operation of the GUI
+Box14 = uicontrol('style','text','string','Denavit Hartenburg Calculator','position',[1 380 180 30]); %% Displays a box with text inside to aid with operation of the GUI
+Box15 = uicontrol('style','text','string','Enter your joint angles into the boxes below to calculate the end effector position of your robot','position',[1 325 500 30]); %% Displays a box with text inside to aid with operation of the GUI
+Box16 = uicontrol('style','text','string','X coordinate =','position',[1 100 100 20],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box17 = uicontrol('style','text','string','Y Coordinate =','position',[1 75 100 20],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box18 = uicontrol('style','text','string','Z coordinate =','position',[1 50 100 20],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box19 = uicontrol('style','text','string','Roll =','position',[150 100 50 20],'BackgroundColor','Red'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box20 = uicontrol('style','text','string','Pitch =','position',[150 75 50 20],'BackgroundColor','green'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
+Box21 = uicontrol('style','text','string','Yaw =','position',[150 50 50 20],'BackgroundColor','blue'); %% Displays a box with text inside to aid with operation of the GUI. Added BackgroundColor function at the end to alter the colour of the textbox
 function pushButtonPressed (src,event) %% Causes the below event to trigger upon pressing the GUI pushbutton
     
     global box1 %%Declares the use of box1 inside this function. In particular to take the values inputted by the user.
@@ -144,11 +144,11 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     Pitch = atand(-R31/(sqrt(R32*R32)+(R33*R33))); %%Formula to calculate the Pitch value using the variabes from te resultant matrix, assigned to the variable Pitch
     Roll = atand(R32/R33); % Formula to calculate the Roll value using the variables from the resultant matrix, assigned to the variable Roll
     
-    Box22 = uicontrol('style','text','string',X,'position',[5 20 100 30],'BackgroundColor','Red'); %% Displays the calculated X value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
-    Box23 = uicontrol('style','text','string',Y,'position',[105 20 100 30],'BackgroundColor','green'); %% Displays the calculated Y value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
-    Box24 = uicontrol('style','text','string',Z,'position',[205 20 100 30],'BackgroundColor','blue'); %% Displays the calculated Z value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
-    Box22 = uicontrol('style','text','string',Roll,'position',[305 20 100 30],'BackgroundColor','Red'); %% Displays the calculated Yaw value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
-    Box23 = uicontrol('style','text','string',Pitch,'position',[405 20 100 30],'BackgroundColor','green'); %% Displays the calculated Pitch value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
-    Box24 = uicontrol('style','text','string',Yaw,'position',[505 20 100 30],'BackgroundColor','blue'); %% Displays the calculated Roll value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box22 = uicontrol('style','text','string',X,'position',[90 100 50 20],'BackgroundColor','Red'); %% Displays the calculated X value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box23 = uicontrol('style','text','string',Y,'position',[90 75 50 20],'BackgroundColor','green'); %% Displays the calculated Y value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box24 = uicontrol('style','text','string',Z,'position',[90 50 50 20],'BackgroundColor','blue'); %% Displays the calculated Z value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box22 = uicontrol('style','text','string',Roll,'position',[190 100 50 20],'BackgroundColor','Red'); %% Displays the calculated Yaw value in a red text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box23 = uicontrol('style','text','string',Pitch,'position',[190 75 50 20],'BackgroundColor','green'); %% Displays the calculated Pitch value in a green text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
+    Box24 = uicontrol('style','text','string',Yaw,'position',[190 50 50 20],'BackgroundColor','blue'); %% Displays the calculated Roll value in a blue text box in the GUI. Text box only appears once the pushbutton has been pressed as it is part of the psuh button event
     
 end
