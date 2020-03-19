@@ -134,8 +134,8 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     Z = finalResultant(3,4); %% Assigns the Z value of the end effector to variable Y. The Z value is pulled from row three column four of the final resultant matrix
     
     %% Used to pull the values from the final resultant matrix needed to calculate Yaw, Pitch, and Roll as per the formula
-    R21 = finalResultant(2,1) %% The value in the first row and first column of the resultant matrix has been assigned to R21
-    R11 = finalResultant(1,1) %% The value in the second row and first column of the resultant matrix has been assigned to R11
+    R11 = finalResultant(1,1) %% The value in the first row and first column of the resultant matrix has been assigned to R21
+    R21 = finalResultant(2,1) %% The value in the second row and first column of the resultant matrix has been assigned to R11
     R31 = finalResultant(3,1) %% The value in the third row and first column of the resultant matrix has been assigned to R31
     R32 = finalResultant(3,2) %% The value in the third row and second column of the resultant matrix has been assigned to R32
     R33 = finalResultant(3,3) %% The value in the third row and third column of the resultant matrix has been assigned to R33
