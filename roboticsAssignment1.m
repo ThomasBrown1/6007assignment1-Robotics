@@ -61,7 +61,7 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     box6=get(box6,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
     
     Theta1=str2num(box1); %% Converts the value inputted into box1 on the GUI from a string to a number for mathmatical manipulation
-    Theta2=str2num(box2); %% Converts the value inputted into box2 on the GUI from a string to a number for mathmatical manipulation
+    Theta2=str2num(box2)-90; %% Converts the value inputted into box2 on the GUI from a string to a number for mathmatical manipulation
     Theta3=str2num(box3); %% Converts the value inputted into box3 on the GUI from a string to a number for mathmatical manipulation
     Theta4=str2num(box4); %% Converts the value inputted into box4 on the GUI from a string to a number for mathmatical manipulation
     Theta5=str2num(box5); %% Converts the value inputted into box5 on the GUI from a string to a number for mathmatical manipulation
@@ -89,7 +89,7 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     NotAlpha5 = -90; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
     NotAlpha6 = 180; %% Here the value for rotation around the X axis for joint 1 has been assigned to the varaible NotAlpha1
     
-    Base = [1 0 0 0; 0 1 0 0; 0 0 1 -330; 0 0 0 1]; %% Defines the position of the baseframe of the Yakasaw GP8 robot
+    Base = [1 0 0 0; 0 1 0 0; 0 0 1 -330; 0 0 0 1]; %% Defines the position of the baseframe of the Yakasawa GP8 robot
     
     jointSzrotation = [cosd(Theta1) -sind(Theta1) 0 0; sind(Theta1) cosd(Theta1) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a varaible.
     jointSztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D1; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
@@ -97,7 +97,7 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     jointSxtranslation = [1 0 0 0; 0 cosd(NotAlpha1) -sind(NotAlpha1) 0; 0 sind(NotAlpha1) cosd(NotAlpha1) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigne dto a variable.
     jointSresultant = jointSzrotation*jointSztranslation*jointSxtranslation*jointSxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointSresultant.
     
-    jointLzrotation = [cosd(Theta2-90) -sind(Theta2-90) 0 0; sind(Theta2-90) cosd(Theta2-90) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointLzrotation = [cosd(Theta2) -sind(Theta2) 0 0; sind(Theta2) cosd(Theta2) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointLztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D2; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointLxrotation = [ 1 0 0 A2; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointLxtranslation = [1 0 0 0; 0 cosd(NotAlpha2) -sind(NotAlpha2) 0; 0 sind(NotAlpha2) cosd(NotAlpha2) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
