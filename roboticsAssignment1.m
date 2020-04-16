@@ -8,8 +8,6 @@ clc %% clears the command window each time the programme is run to aviod old inf
 clear %% clears the variables and functions used throughout the code from memory on each new run
 close all %% Closes all figures displayed from previously ran code
 
-
-
 global editBoxJointS %% Decleares box1 as global so that it can be utalised in a function further on in the code
 global editBoxJointL %% Decleares box2 as global so that it can be utalised in a function further on in the code
 global editBoxJointU %% Decleares box3 as global so that it can be utalised in a function further on in the code
@@ -54,11 +52,11 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     global editBoxJointT %%Declares the use of box6 inside this function. In particular to take the values inputted by the user.
    
     editBoxJointS=get(editBoxJointS,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
-    editBoxJointL=get(editBoxJointL,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
-    editBoxJointU=get(editBoxJointU,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
-    editBoxJointR=get(editBoxJointR,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
-    editBoxJointB=get(editBoxJointB,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
-    editBoxJointT=get(editBoxJointT,'string'); %% when puhbutton is pressed it gets the value from box1 which is defiened as a string
+    editBoxJointL=get(editBoxJointL,'string'); %% when puhbutton is pressed it gets the value from box2 which is defiened as a string
+    editBoxJointU=get(editBoxJointU,'string'); %% when puhbutton is pressed it gets the value from box3 which is defiened as a string
+    editBoxJointR=get(editBoxJointR,'string'); %% when puhbutton is pressed it gets the value from box4 which is defiened as a string
+    editBoxJointB=get(editBoxJointB,'string'); %% when puhbutton is pressed it gets the value from box5 which is defiened as a string
+    editBoxJointT=get(editBoxJointT,'string'); %% when puhbutton is pressed it gets the value from box6 which is defiened as a string
     
     Theta1=str2num(editBoxJointS); %% Converts the value inputted into box1 on the GUI from a string to a number for mathmatical manipulation
     Theta2=str2num(editBoxJointL)-90; %% Converts the value inputted into box2 on the GUI from a string to a number for mathmatical manipulation. -90 becuase a rotation of -90 is required to allign the axis, see kinamtic diagram.
@@ -93,37 +91,37 @@ function pushButtonPressed (src,event) %% Causes the below event to trigger upon
     %% Below the resultant matrix is calculated for each joint by combining the rotation and translation matrices at each stage. The variables declared above have been passed into the appropriate matrix.
     jointSzrotation = [cosd(Theta1) -sind(Theta1) 0 0; sind(Theta1) cosd(Theta1) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a varaible.
     jointSztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D1; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointSxrotation = [ 1 0 0 A1; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointSxrotation = [1 0 0 A1; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointSxtranslation = [1 0 0 0; 0 cosd(ichthys1) -sind(ichthys1) 0; 0 sind(ichthys1) cosd(ichthys1) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigne dto a variable.
     jointSresultant = jointSzrotation*jointSztranslation*jointSxtranslation*jointSxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointSresultant.
     
-    jointLzrotation = [ cosd(Theta2) -sind(Theta2) 0 0; sind(Theta2) cosd(Theta2) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
-    jointLztranslation = [ 1 0 0 0; 0 1 0 0; 0 0 1 D2; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointLxrotation = [ 1 0 0 A2; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointLxtranslation = [ 1 0 0 0; 0 cosd(ichthys2) -sind(ichthys2) 0; 0 sind(ichthys2) cosd(ichthys2) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointLzrotation = [cosd(Theta2) -sind(Theta2) 0 0; sind(Theta2) cosd(Theta2) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
+    jointLztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D2; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointLxrotation = [1 0 0 A2; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointLxtranslation = [1 0 0 0; 0 cosd(ichthys2) -sind(ichthys2) 0; 0 sind(ichthys2) cosd(ichthys2) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointLresultant = jointLzrotation*jointLztranslation*jointLxtranslation*jointLxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointLresultant.
     
     jointUzrotation = [cosd(Theta3) -sind(Theta3) 0 0; sind(Theta3) cosd(Theta3) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointUztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D3; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointUxrotation = [ 1 0 0 A3; 0 1 0 0; 0 0 1 0;  0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointUxrotation = [1 0 0 A3; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointUxtranslation = [1 0 0 0; 0 cosd(ichthys3) -sind(ichthys3) 0; 0 sind(ichthys3) cosd(ichthys3) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointUresultant = jointUzrotation*jointUztranslation*jointUxrotation*jointUxtranslation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointUresultant.
     
     jointRzrotation = [cosd(Theta4) -sind(Theta4) 0 0; sind(Theta4) cosd(Theta4) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointRztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D4; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointRxrotation = [ 1 0 0 A4; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointRxrotation = [1 0 0 A4; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointRxtranslation = [1 0 0 0; 0 cosd(ichthys4) -sind(ichthys4) 0; 0 sind(ichthys4) cosd(ichthys4) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointRresultant = jointRzrotation*jointRztranslation*jointRxtranslation*jointRxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointRresultant.
     
     jointBzrotation = [cosd(Theta5) -sind(Theta5) 0 0; sind(Theta5) cosd(Theta5) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointBztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D5; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointBxrotation = [ 1 0 0 A5; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointBxrotation = [1 0 0 A5; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointBxtranslation = [1 0 0 0; 0 cosd(ichthys5) -sind(ichthys5) 0; 0 sind(ichthys5) cosd(ichthys5) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointBresultant = jointBzrotation*jointBztranslation*jointBxtranslation*jointBxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointBresultant.
     
     jointTzrotation = [cosd(Theta6) -sind(Theta6) 0 0; sind(Theta6) cosd(Theta6) 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointTztranslation = [1 0 0 0; 0 1 0 0; 0 0 1 D6; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
-    jointTxrotation = [ 1 0 0 A6; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
+    jointTxrotation = [1 0 0 A6; 0 1 0 0; 0 0 1 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. 
     jointTxtranslation = [1 0 0 0; 0 cosd(ichthys6) -sind(ichthys6) 0; 0 sind(ichthys6) cosd(ichthys6) 0; 0 0 0 1]; %% Constructs a four by four matrix as per the DH method. Using cosd and signd negates the need to convert between degrees and radians elsehwere in the code. The matrix is assigned to a variable.
     jointTresultant = jointTzrotation*jointTztranslation*jointTxtranslation*jointTxrotation; %% Multiplies the values calculated for the rotational and translation matrices for this joint to find the resultant matrix as per the DH method.Assigned to the variable jointTresultant.
     
